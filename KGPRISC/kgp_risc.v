@@ -15,7 +15,8 @@ module kgp_risc(
 	 output [31:0] PC,
 	 output [31:0] DA,
 	 output [31:0] write_data,
-	 output [3:0] wea
+	 output [3:0] wea,
+	 output stop
 	 );
 
 	wire [31:0] rd1, rd2, ra, rd, ra1;
@@ -43,7 +44,7 @@ module kgp_risc(
 	
 	assign wea = {4{MemWrite}};	//If MemWrite is 1, then we need to write in memory, so wea=1111
 	instr_decoder D(instr, clk, start, Branch, MemRead, MemtoReg, ALUop, MemWrite, ALUsrc, RegWrite, ra_RegWrite);
-	RegBank R(instr[25:21], instr[20:16], clk, RegWrite, ra_RegWrite, (MemtoReg || MemWrite), instr[25:21], data, pc_4, start, rd1, rd2, ra, write_data);
+	RegBank R(instr[25:21], instr[20:16], clk, RegWrite, ra_RegWrite, (MemtoReg || MemWrite), instr[25:21], data, pc_4, start, rd1, rd2, ra, write_data, stop);
 	sign_extend S1(instr[15:0], sign_extended_imm);
 	mux_32bit M2(ALUsrc, rd2, sign_extended_imm, alu_data);	//Choose immediate value or value of 2nd register to calculate in ALU
 	alu A(clk, ALUop, ALUsrc, instr[26], rd1, alu_data, instr[3:0], instr[10:6], alu_out, carryflag, zflag, overflowflag, signflag, DA);

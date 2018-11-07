@@ -20,7 +20,8 @@ module RegBank( input [4:0] rr1,
 					  output [31:0] rd1,
 					  output [31:0] rd2,
 					  output [31:0] ra,
-					  output [31:0] write_data
+					  output [31:0] write_data,
+					  output reg stop
 					);
 	reg [31:0] register [31:0];
 	
@@ -28,6 +29,14 @@ module RegBank( input [4:0] rr1,
 	assign rd2 = register[rr2];
 	assign ra = register[31];		//Return address in 31st register
 	assign write_data = register[rr1];
+
+	always@(posedge clk)
+	begin
+		if((register[1]<register[2]) && (register[2]<register[3]) && (register[3]<register[4]))
+			stop = 1;
+		else
+			stop = 0;
+	end
 
 	always@(posedge clk)
 	begin

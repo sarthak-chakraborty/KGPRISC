@@ -10,7 +10,6 @@ NAME: Nikhil Nayan Jha (16CS30022)
 module top_tb;
 
 	// Inputs
-	reg clk;
 	reg clkf;
 	reg start;
 
@@ -18,8 +17,7 @@ module top_tb;
 	wire stop;
 
 	// Instantiate the Unit Under Test (UUT)
-	top uut (
-		.clk(clk), 
+	top uut ( 
 		.clkf(clkf),
 		.start(start), 
 		.stop(stop)
@@ -27,7 +25,6 @@ module top_tb;
 
 	initial begin
 		// Initialize Inputs
-		clk = 0;
 		clkf=0;
 		start = 0;
 
@@ -38,8 +35,6 @@ module top_tb;
 
 	end
       
-	always
-	#3 clk=!clk;
 		
 	always
 	#1 clkf = !clkf;

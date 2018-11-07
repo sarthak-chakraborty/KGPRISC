@@ -1,0 +1,13 @@
+
+# PlanAhead Generated IO constraints 
+
+NET "clkf" IOSTANDARD = LVCMOS18;
+NET "start" IOSTANDARD = LVCMOS18;
+NET "stop" IOSTANDARD = LVCMOS18;
+
+# PlanAhead Generated physical constraints 
+
+NET "clkf" LOC = F4;
+NET "start" LOC = V10;
+NET "stop" LOC = V11;
+NET "start" CLOCK_DEDICATED_ROUTE = FALSE;

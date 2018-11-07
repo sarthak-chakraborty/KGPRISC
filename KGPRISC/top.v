@@ -7,9 +7,10 @@ NAME: Nikhil Nayan Jha (16CS30022)
 */
 
 `timescale 1ns / 1ps
-module top( input clk, input clkf, input start, output stop
+module top( input clkf, input start, output stop
     );
 
+wire clk;
 wire [3:0] wea;
 wire [31:0] douti;
 wire [31:0] doutd;
@@ -18,6 +19,9 @@ wire [31:0] PC;
 wire [31:0] DA;
 wire [31:0] dina=32'bx;
 wire [31:0] write_data;
+
+
+clock_divider C(clkf, start, clk);
 
 instr_memory I(		//Instruction Memory - douti(i.e. instructions) are fetched from address PC at every clock pulse
 		.clka(clkf), 
@@ -37,6 +41,6 @@ data_memory D(		//Data Memory - doutd(i.e. data) are fetched from address DA at 
 		.douta(doutd)
 	);
 	
-kgp_risc K(douti, doutd, start, clk, PC, DA, write_data, wea);
+kgp_risc K(douti, doutd, start, clk, PC, DA, write_data, wea, stop);
 
 endmodule
